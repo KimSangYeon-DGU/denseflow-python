@@ -92,4 +92,4 @@ class DenseFlow():
         return self
 
     def __len__(self):
-        return len(self.frames) - 1
+        return min(0, len(self.frames) - 1)
