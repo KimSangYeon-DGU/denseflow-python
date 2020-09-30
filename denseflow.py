@@ -1,7 +1,8 @@
 '''DenseFlow
 Author: Sangyeon Kim
-Description: This class is based on opencv's optical flow implementation and 
-Prerequisite: OpenCV, OpenCV-contrib
+Description: This class is based on opencv's optical flow implementation
+    and https://github.com/yjxiong/dense_flow
+Prerequisite: OpenCV, OpenCV-contrib, numpy
 '''
 import cv2
 import os
