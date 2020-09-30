@@ -13,6 +13,8 @@ pip install opencv-python opencv-contrib-python numpy tqdm
 
 # How to run DenseFlow example
 ```bash
+git clone https://github.com/KimSangYeon-DGU/denseflow-python
+cd denseflow-python
 python example.py
 ```
 # Reference
