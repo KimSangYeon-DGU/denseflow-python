@@ -28,7 +28,7 @@ class DenseFlow():
         self.frames = []
         self.index = 1
         self.prev_frame = None
-        self.next_frame = None
+        self.curr_frame = None
         self._preprocess()
 
     def _preprocess(self):
@@ -53,6 +53,9 @@ class DenseFlow():
         else:
             raise Exception('This type is not applicable.')
 
+        if len(self.frames) <= 1:
+            raise Exception('The number of images should be greater than 1.')
+
         print('Total frames: {0}'.format(len(self.frames)))
 
     def _save(self, data):
@@ -73,10 +76,10 @@ class DenseFlow():
     def __next__(self):
         if self.index < len(self.frames):
             self.prev_frame = self.frames[self.index - 1]
-            self.next_frame = self.frames[self.index]
+            self.curr_frame = self.frames[self.index]
             prev_gray = cv2.cvtColor(self.prev_frame, cv2.COLOR_BGR2GRAY)
-            next_gray = cv2.cvtColor(self.next_frame, cv2.COLOR_BGR2GRAY)
-            flow = self.extractor.calc(prev_gray, next_gray, None)
+            curr_gray = cv2.cvtColor(self.curr_frame, cv2.COLOR_BGR2GRAY)
+            flow = self.extractor.calc(prev_gray, curr_gray, None)
 
             x = flow[..., 0]
             y = flow[..., 1]
@@ -84,7 +87,7 @@ class DenseFlow():
             x = x.astype('uint8')
             y = y.astype('uint8')
             self.index += 1
-            return x, y
+            return self.curr_frame, x, y
         else:
             raise StopIteration
 
@@ -92,4 +95,4 @@ class DenseFlow():
         return self
 
     def __len__(self):
-        return min(0, len(self.frames) - 1)
+        return len(self.frames) - 1

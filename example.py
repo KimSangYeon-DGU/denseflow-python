@@ -4,6 +4,9 @@ from denseflow import DenseFlow
 
 denseflow = DenseFlow(in_data='project.avi', in_type='video')
 
-for x, y in tqdm(denseflow):
-    cv2.imwrite('x_flow.jpg', x)
-    cv2.imwrite('y_flow.jpg', y)
+idx = 0
+for img, x, y in tqdm(denseflow):
+    cv2.imwrite('./images/img/img{0:03d}.png'.format(idx), img)
+    cv2.imwrite('./images/x_flow/x_flow_{0:03d}.png'.format(idx), x)
+    cv2.imwrite('./images/y_flow/y_flow_{0:03d}.png'.format(idx), y)
+    idx+=1
